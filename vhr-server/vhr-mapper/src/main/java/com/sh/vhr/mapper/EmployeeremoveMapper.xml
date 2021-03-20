@@ -1,0 +1,19 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.vhr.mapper.EmployeeremoveMapper">
+
+    <resultMap id="BaseResultMap" type="com.sh.vhr.model.Employeeremove">
+            <result column="id" property="id" jdbcType="INTEGER" />
+            <result column="eid" property="eid" jdbcType="INTEGER" />
+            <result column="afterDepId" property="afterdepid" jdbcType="INTEGER" />
+            <result column="afterJobId" property="afterjobid" jdbcType="INTEGER" />
+            <result column="removeDate" property="removedate" jdbcType="DATE" />
+            <result column="reason" property="reason" jdbcType="VARCHAR" />
+            <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getAllEmployeeremoves" resultMap="BaseResultMap">
+        select * from employeeremove;
+    </select>
+</mapper>

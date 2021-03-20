@@ -1,0 +1,21 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.vhr.mapper.MailSendLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.sh.vhr.model.MailSendLog">
+            <result column="msgId" property="msgid" jdbcType="VARCHAR" />
+            <result column="empId" property="empid" jdbcType="INTEGER" />
+            <result column="status" property="status" jdbcType="INTEGER" />
+            <result column="routeKey" property="routekey" jdbcType="VARCHAR" />
+            <result column="exchange" property="exchange" jdbcType="VARCHAR" />
+            <result column="count" property="count" jdbcType="INTEGER" />
+            <result column="tryTime" property="trytime" jdbcType="DATE" />
+            <result column="createTime" property="createtime" jdbcType="DATE" />
+            <result column="updateTime" property="updatetime" jdbcType="DATE" />
+    </resultMap>
+
+    <select id="getAllMailSendLogs" resultMap="BaseResultMap">
+        select * from mail_send_log;
+    </select>
+</mapper>

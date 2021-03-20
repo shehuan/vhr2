@@ -1,0 +1,67 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.vhr.mapper.HrMapper">
+
+    <resultMap id="BaseResultMap" type="com.sh.vhr.model.Hr">
+        <id property="id" column="id"/>
+        <collection property="roles" column="id" select="findRolesByUserId"/>
+    </resultMap>
+    <update id="updateHr" parameterType="com.sh.vhr.model.Hr">
+        update hr
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled},
+            </if>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="userface != null">
+                userface = #{userface},
+            </if>
+            <if test="remark != null">
+                remark = #{remark}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteHrById">
+        delete from hr where id = #{hrid}
+    </delete>
+
+    <select id="findUserByUsername" resultMap="BaseResultMap">
+        select *
+        from hr
+        where username = #{username}
+    </select>
+
+    <select id="findRolesByUserId" resultType="com.sh.vhr.model.Role">
+        select *
+        from role
+        where id in (select rid from hr_role where hrid = #{hrId})
+    </select>
+    <select id="getAllHrs" resultMap="BaseResultMap">
+        select *
+        from hr
+        where id != #{id}
+        <if test="keyword != null and keyword !=''">
+            and name like concat('%', #{keyword}, '%')
+        </if>
+        order by id
+    </select>
+</mapper>

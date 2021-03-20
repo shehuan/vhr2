@@ -1,0 +1,16 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.vhr.mapper.MsgcontentMapper">
+
+    <resultMap id="BaseResultMap" type="com.sh.vhr.model.Msgcontent">
+            <result column="id" property="id" jdbcType="INTEGER" />
+            <result column="title" property="title" jdbcType="VARCHAR" />
+            <result column="message" property="message" jdbcType="VARCHAR" />
+            <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="getAllMsgcontents" resultMap="BaseResultMap">
+        select * from msgcontent;
+    </select>
+</mapper>

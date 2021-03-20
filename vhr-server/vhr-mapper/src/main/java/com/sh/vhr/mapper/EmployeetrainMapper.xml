@@ -1,0 +1,17 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.vhr.mapper.EmployeetrainMapper">
+
+    <resultMap id="BaseResultMap" type="com.sh.vhr.model.Employeetrain">
+            <result column="id" property="id" jdbcType="INTEGER" />
+            <result column="eid" property="eid" jdbcType="INTEGER" />
+            <result column="trainDate" property="traindate" jdbcType="DATE" />
+            <result column="trainContent" property="traincontent" jdbcType="VARCHAR" />
+            <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getAllEmployeetrains" resultMap="BaseResultMap">
+        select * from employeetrain;
+    </select>
+</mapper>

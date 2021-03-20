@@ -1,0 +1,25 @@
+package com.sh.vhr.exception;
+
+import com.sh.vhr.model.RespBean;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+
+/**
+ * 全局异常处理
+ */
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(SQLException.class)
+    public RespBean sqlException(SQLException e) {
+        if (e instanceof SQLIntegrityConstraintViolationException) {
+            if (e.getMessage().contains("Duplicate entry")) {
+                return RespBean.error("数据已存在，请勿重复添加！");
+            }
+            return RespBean.error("该数据有关联数据，操作失败！");
+        }
+        return RespBean.error("数据库异常，操作失败！");
+    }
+}

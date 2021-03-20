@@ -1,0 +1,19 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.vhr.mapper.EmployeeecMapper">
+
+    <resultMap id="BaseResultMap" type="com.sh.vhr.model.Employeeec">
+            <result column="id" property="id" jdbcType="INTEGER" />
+            <result column="eid" property="eid" jdbcType="INTEGER" />
+            <result column="ecDate" property="ecdate" jdbcType="DATE" />
+            <result column="ecReason" property="ecreason" jdbcType="VARCHAR" />
+            <result column="ecPoint" property="ecpoint" jdbcType="INTEGER" />
+            <result column="ecType" property="ectype" jdbcType="INTEGER" />
+            <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getAllEmployeeecs" resultMap="BaseResultMap">
+        select * from employeeec;
+    </select>
+</mapper>

@@ -1,0 +1,19 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.vhr.mapper.AdjustsalaryMapper">
+
+    <resultMap id="BaseResultMap" type="com.sh.vhr.model.Adjustsalary">
+            <result column="id" property="id" jdbcType="INTEGER" />
+            <result column="eid" property="eid" jdbcType="INTEGER" />
+            <result column="asDate" property="asdate" jdbcType="DATE" />
+            <result column="beforeSalary" property="beforesalary" jdbcType="INTEGER" />
+            <result column="afterSalary" property="aftersalary" jdbcType="INTEGER" />
+            <result column="reason" property="reason" jdbcType="VARCHAR" />
+            <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getAllAdjustsalarys" resultMap="BaseResultMap">
+        select * from adjustsalary;
+    </select>
+</mapper>

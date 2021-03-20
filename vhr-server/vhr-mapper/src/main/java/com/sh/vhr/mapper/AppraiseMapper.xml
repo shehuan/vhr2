@@ -1,0 +1,18 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.vhr.mapper.AppraiseMapper">
+
+    <resultMap id="BaseResultMap" type="com.sh.vhr.model.Appraise">
+            <result column="id" property="id" jdbcType="INTEGER" />
+            <result column="eid" property="eid" jdbcType="INTEGER" />
+            <result column="appDate" property="appdate" jdbcType="DATE" />
+            <result column="appResult" property="appresult" jdbcType="VARCHAR" />
+            <result column="appContent" property="appcontent" jdbcType="VARCHAR" />
+            <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getAllAppraises" resultMap="BaseResultMap">
+        select * from appraise;
+    </select>
+</mapper>
