@@ -33,4 +33,6 @@ public interface EmployeeMapper {
                                           @Param("beginDateScope") Date[] beginDateScope);
 
     Long getTotalSuper(@Param("emp") Employee employee, @Param("beginDateScope") Date[] beginDateScope);
+
+    Employee getEmployeeById(Integer id);
 }

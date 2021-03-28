@@ -454,4 +454,7 @@
             </if>
         </where>
     </select>
+    <select id="getEmployeeById" resultMap="EmployeeInfo">
+        select * from employee where id = #{id}
+    </select>
 </mapper>

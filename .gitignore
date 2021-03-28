@@ -18,3 +18,5 @@
 target/
 *.iml
 test/
+.mvn/
+mvn*

@@ -3,6 +3,10 @@ package com.sh.vhr.service;
 import com.sh.vhr.mapper.EmployeeMapper;
 import com.sh.vhr.model.Employee;
 import com.sh.vhr.model.RespPageBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +17,13 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeService.class);
+
     @Autowired
     EmployeeMapper employeeMapper;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
     SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
@@ -49,7 +58,19 @@ public class EmployeeService {
 
     public Integer addEmployee(Employee employee) {
         calculateContractTerm(employee);
-        return employeeMapper.addEmployee(employee);
+        Integer result = employeeMapper.addEmployee(employee);
+        if (result == 1) {
+            Employee emp = employeeMapper.getEmployeeById(employee.getId());
+            rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
+                if (ack) {
+                    logger.info("消息已被消费！");
+                } else {
+                    logger.info("消息未被消费！");
+                }
+            });
+            rabbitTemplate.convertAndSend("vhr.mail.welcome", emp);
+        }
+        return result;
     }
 
     public Integer getMaxWorkID() {
