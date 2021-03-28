@@ -1,4 +1,4 @@
-package com.sh.vhr.controller.system.emp;
+package com.sh.vhr.controller.emp;
 
 import com.sh.vhr.model.*;
 import com.sh.vhr.service.*;
