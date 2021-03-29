@@ -44,6 +44,13 @@
         <association property="position" column="posId" select="com.sh.vhr.mapper.PositionMapper.getPositionById"/>
     </resultMap>
 
+    <resultMap id="EmployeeWithSalaryInfo" type="com.sh.vhr.model.Employee" extends="BaseResultMap">
+        <association property="salary" column="id"
+                     select="com.sh.vhr.mapper.SalaryMapper.getSalaryByEmployeeId"/>
+        <association property="department" column="departmentId"
+                     select="com.sh.vhr.mapper.DepartmentMapper.getParentDepartment"/>
+    </resultMap>
+
     <insert id="addEmployee" parameterType="com.sh.vhr.model.Employee" useGeneratedKeys="true"
             keyProperty="id">
         insert into employee
@@ -456,5 +463,9 @@
     </select>
     <select id="getEmployeeById" resultMap="EmployeeInfo">
         select * from employee where id = #{id}
+    </select>
+
+    <select id="getEmployeeWithSalaryByPage" resultMap="EmployeeWithSalaryInfo">
+        select * from employee limit #{offset}, #{pageSize}
     </select>
 </mapper>

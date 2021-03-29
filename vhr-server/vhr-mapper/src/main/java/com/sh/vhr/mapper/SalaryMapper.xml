@@ -104,4 +104,8 @@
     <select id="getAllSalaries" resultMap="BaseResultMap">
         select * from salary;
     </select>
+
+    <select id="getSalaryByEmployeeId" resultMap="BaseResultMap">
+        select * from salary where id = (select sid from empsalary where eid = #{empId})
+    </select>
 </mapper>

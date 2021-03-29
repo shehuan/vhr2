@@ -35,4 +35,6 @@ public interface EmployeeMapper {
     Long getTotalSuper(@Param("emp") Employee employee, @Param("beginDateScope") Date[] beginDateScope);
 
     Employee getEmployeeById(Integer id);
+
+    List<Employee> getEmployeeWithSalaryByPage(Integer offset, Integer pageSize);
 }

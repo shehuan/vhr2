@@ -15,4 +15,6 @@ public interface SalaryMapper {
     int deleteSalaryById(Integer id);
 
     int updateSalary(Salary salary);
+
+    Salary getSalaryByEmployeeId(Integer empId);
 }

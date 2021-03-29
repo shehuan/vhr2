@@ -102,4 +102,17 @@ public class EmployeeService {
         respPageBean.setTotal(total);
         return respPageBean;
     }
+
+    public RespPageBean getEmployeeWithSalaryByPage(Integer pageNum, Integer pageSize) {
+        Integer offset = null;
+        if (pageNum != null && pageSize != null) {
+            offset = (pageNum - 1) * pageSize;
+        }
+        List<Employee> data = employeeMapper.getEmployeeWithSalaryByPage(offset, pageSize);
+        Long total = employeeMapper.getTotal("");
+        RespPageBean respPageBean = new RespPageBean();
+        respPageBean.setData(data);
+        respPageBean.setTotal(total);
+        return respPageBean;
+    }
 }
