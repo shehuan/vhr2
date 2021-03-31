@@ -1,9 +1,11 @@
 package com.sh.vhr.service;
 
+import com.sh.vhr.mapper.EmpsalaryMapper;
 import com.sh.vhr.mapper.SalaryMapper;
 import com.sh.vhr.model.Salary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -12,6 +14,9 @@ import java.util.List;
 public class SalaryService {
     @Autowired
     private SalaryMapper salaryMapper;
+
+    @Autowired
+    private EmpsalaryMapper empsalaryMapper;
 
     public List<Salary> getAllSalaries() {
         return salaryMapper.getAllSalaries();
@@ -28,5 +33,9 @@ public class SalaryService {
 
     public int updateSalary(Salary salary) {
         return salaryMapper.updateSalary(salary);
+    }
+
+    public Integer updateEmployeeSalary(Integer empId, Integer salaryId) {
+        return empsalaryMapper.addRecord(empId, salaryId);
     }
 }

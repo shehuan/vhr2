@@ -4,10 +4,17 @@
 <mapper namespace="com.sh.vhr.mapper.EmpsalaryMapper">
 
     <resultMap id="BaseResultMap" type="com.sh.vhr.model.Empsalary">
-            <result column="id" property="id" jdbcType="INTEGER" />
-            <result column="eid" property="eid" jdbcType="INTEGER" />
-            <result column="sid" property="sid" jdbcType="INTEGER" />
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="eid" property="eid" jdbcType="INTEGER"/>
+        <result column="sid" property="sid" jdbcType="INTEGER"/>
     </resultMap>
+    <!--replace into 会先删除再添加，eid字段需要是唯一的-->
+    <insert id="addRecord">
+        replace into empsalary (eid, sid) values (#{empId}, #{salaryId})
+    </insert>
+    <delete id="deleteByEmpId">
+        delete from empsalary where eid = #{empId}
+    </delete>
 
     <select id="getAllEmpsalarys" resultMap="BaseResultMap">
         select * from empsalary;
