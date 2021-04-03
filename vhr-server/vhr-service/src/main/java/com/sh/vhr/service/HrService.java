@@ -61,4 +61,8 @@ public class HrService implements UserDetailsService {
         hrRoleMapper.deleteRoleByHrId(hrid);
         return hrMapper.deleteHrById(hrid);
     }
+
+    public List<Hr> getAllHrsExceptCurrentHr() {
+        return hrMapper.getAllHrsExceptCurrentHr(HrUtils.getCurrentHr().getId());
+    }
 }

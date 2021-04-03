@@ -64,4 +64,10 @@
         </if>
         order by id
     </select>
+    <select id="getAllHrsExceptCurrentHr" resultType="com.sh.vhr.model.Hr">
+        select *
+        from hr
+        where id != #{id}
+        order by id
+    </select>
 </mapper>
