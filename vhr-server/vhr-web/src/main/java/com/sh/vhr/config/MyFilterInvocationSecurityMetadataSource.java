@@ -29,10 +29,10 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         // 请求的地址
         String requestUrl = ((FilterInvocation) object).getRequestUrl();
-        if (antPathMatcher.match("/login*", requestUrl) || "/verify_code".equals(requestUrl)) {
-            // 返回null表示当前请求不需要任何角色都能访问
-            return null;
-        }
+//        if (antPathMatcher.match("/verifyCode", requestUrl)) {
+//            // 返回null表示当前请求不需要任何角色都能访问
+//            return null;
+//        }
         List<Menu> menus = menuService.getAllMenuWithRole();
         for (Menu menu : menus) {
             // 请求路径和menu中的路径匹配

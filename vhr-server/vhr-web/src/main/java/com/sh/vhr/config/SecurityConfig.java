@@ -10,10 +10,12 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -31,6 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     MyAccessDecisionManager myAccessDecisionManager;
 
+    @Autowired
+    VerifyCodeFilter verifyCodeFilter;
+
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -40,8 +45,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(hrService).passwordEncoder(passwordEncoder());
     }
 
+    /**
+     * 在这里可以配置那些不需要登录就可以访问的接口
+     *
+     * @param web
+     * @throws Exception
+     */
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/verifyCode");
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // 在用户名密码过滤器前添加验证码过滤器
+        http.addFilterBefore(verifyCodeFilter, UsernamePasswordAuthenticationFilter.class);
+
         http.authorizeRequests()
                 // 配置动态权限
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
@@ -106,7 +125,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     // session正常过期、后端重启，导致前端session不可用，设置http401，让前端处理
                     httpServletResponse.setStatus(401);
                     RespBean respBean = RespBean.error("访问失败！");
-                    if (e instanceof InsufficientAuthenticationException){
+                    if (e instanceof InsufficientAuthenticationException) {
                         respBean.setMsg("尚未登录，请先登录！");
                     }
                     String s = new ObjectMapper().writeValueAsString(respBean);
