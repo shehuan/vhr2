@@ -40,6 +40,9 @@
         </set>
         where id = #{id}
     </update>
+    <update id="updatePassword">
+        update hr set password = #{encodePass} where id = #{hrid}
+    </update>
     <delete id="deleteHrById">
         delete from hr where id = #{hrid}
     </delete>
@@ -69,5 +72,10 @@
         from hr
         where id != #{id}
         order by id
+    </select>
+    <select id="findHrById" resultType="com.sh.vhr.model.Hr">
+        select *
+        from hr
+        where id = #{hrid}
     </select>
 </mapper>

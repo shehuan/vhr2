@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,5 +65,16 @@ public class HrService implements UserDetailsService {
 
     public List<Hr> getAllHrsExceptCurrentHr() {
         return hrMapper.getAllHrsExceptCurrentHr(HrUtils.getCurrentHr().getId());
+    }
+
+    public boolean updatePassword(String oldpass, String pass, Integer hrid) {
+        Hr hr = hrMapper.findHrById(hrid);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (encoder.matches(oldpass, hr.getPassword())) {
+            String encodePass = encoder.encode(pass);
+            int result = hrMapper.updatePassword(hrid, encodePass);
+            return result == 1;
+        }
+        return false;
     }
 }

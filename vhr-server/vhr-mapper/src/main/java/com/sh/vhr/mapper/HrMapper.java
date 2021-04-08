@@ -20,4 +20,8 @@ public interface HrMapper {
     Integer deleteHrById(Integer hrid);
 
     List<Hr> getAllHrsExceptCurrentHr(Integer id);
+
+    Hr findHrById(Integer hrid);
+
+    int updatePassword(@Param("hrid") Integer hrid, @Param("encodePass") String encodePass);
 }
